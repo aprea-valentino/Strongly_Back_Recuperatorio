@@ -1,24 +1,25 @@
 package com.uade.tpo.demo.entity;
 import jakarta.persistence.*;
 import java.io.Serializable;
+import java.util.Objects;
+import com.uade.tpo.demo.keys.FavoriteId;
 
 @Entity
 @Table(name = "favorites")
+@IdClass(FavoriteId.class)
 public class Favorite implements Serializable {
-    private Long id;
+   
 
     @Id
     @ManyToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
     @Id
     @ManyToOne
-    @JoinColumn(name = "product_id")
+    @JoinColumn(name = "product_id",nullable = false)
     private Product product;
     
-    // Getters y Setters
-    // Constructor (importante para JPA)
 
     public Favorite() {
     }
@@ -28,15 +29,7 @@ public class Favorite implements Serializable {
         this.product = product;
     }
 
-    // --- GETTERS y SETTERS --- (Se asume que los tienes, aquí solo los esenciales)
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
+   
 
     public User getUser() {
         return user;
@@ -52,5 +45,19 @@ public class Favorite implements Serializable {
 
     public void setProduct(Product product) {
         this.product = product;
+    }
+
+    //Como es una clave compuesta
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Favorite favorite = (Favorite) o;
+        return Objects.equals(user, favorite.user) && Objects.equals(product, favorite.product);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(user, product);
     }
 }
