@@ -2,6 +2,7 @@ package com.uade.tpo.demo.entity;
 
 import java.time.Instant;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -18,6 +19,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import java.util.Set;
 
 @Data
 @Builder
@@ -96,5 +99,21 @@ public class User implements UserDetails{
     // Aquí puedes usar un campo de tu entidad, como 'isActive'.
     return this.isActive;
     }
+
+    //Agregado para RECU T3
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private Set<Favorite> favorites = new HashSet<>();
+
+    public Set<Favorite> getFavorites() {
+        return favorites;
+    }
+
+    public void addFavorite(Favorite favorite) {
+        this.favorites.add(favorite);
+    }
+
+    public void removeFavorite(Favorite favorite) {
+        this.favorites.remove(favorite);
+    }  
 
 }
