@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
+import com.uade.tpo.demo.entity.dto.FavoriteDto;
 
 @RestController
 @RequestMapping("/api/favorites")
@@ -35,9 +36,9 @@ public class FavoriteController {
     // GET /api/favorites
     // Requerimiento: Visualizar su lista de productos favoritos
     @GetMapping
-    public ResponseEntity<List<Product>> getFavorites() {
+    public ResponseEntity<List<FavoriteDto>> getFavorites() {
         Long userId = getCurrentUserId(); // CLAVE DE AUTORIZACIÓN
-        List<Product> products = favoriteService.getFavorites(userId);
+        List<FavoriteDto> products = favoriteService.getFavorites(userId);
         return ResponseEntity.ok(products);
     }
 

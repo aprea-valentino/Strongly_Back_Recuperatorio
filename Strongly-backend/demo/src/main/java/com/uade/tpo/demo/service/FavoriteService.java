@@ -11,6 +11,7 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import com.uade.tpo.demo.entity.dto.FavoriteDto;
 
     @Service
 public class FavoriteService {
@@ -30,7 +31,7 @@ public class FavoriteService {
             throw new AlreadyFavoriteException("El producto ya está en la lista de favoritos.");
         }
         
-        User user = userRepository.getById(userId);
+        User user = userRepository.getReferenceById(userId);
                 
         Product product = productRepository.findById(productId)
                 .orElseThrow(() -> new IllegalArgumentException("Producto no encontrado con ID: " + productId));    
@@ -40,10 +41,16 @@ public class FavoriteService {
     }
 
     //Lista de productos favoritos
-    public List<Product> getFavorites(Long userId) {
+    public List<FavoriteDto> getFavorites(Long userId) {
         return favoriteRepository.findByUserId(userId)
                 .stream()
-                .map(Favorite::getProduct) 
+                .map(Favorite::getProduct) // Obtenemos el objeto Product
+                // CORRECCIÓN 2: Mapear la entidad Product al DTO
+                .map(product -> new FavoriteDto(
+                    product.getName(),
+                    product.getDescription(),
+                    product.getPrice()
+                )) 
                 .collect(Collectors.toList());
     }
 
