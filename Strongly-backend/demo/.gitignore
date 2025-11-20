@@ -31,3 +31,6 @@ build/
 
 ### VS Code ###
 .vscode/
+
+# no commitear archivos de uploads
+uploads/
