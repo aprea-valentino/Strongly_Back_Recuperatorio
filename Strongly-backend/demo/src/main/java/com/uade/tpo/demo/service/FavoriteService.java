@@ -23,16 +23,13 @@ public class FavoriteService {
     @Autowired
     private ProductRepository productRepository;
 
-    // Requerimiento 1: Añadir productos a la lista de favoritos
+    
     @Transactional
     public Favorite addFavorite(Long userId, Long productId) {
-        // 1. Verificar si ya existe (para evitar duplicados)
         if (favoriteRepository.findByUserIdAndProductId(userId, productId).isPresent()) {
             throw new AlreadyFavoriteException("El producto ya está en la lista de favoritos.");
         }
-        
         User user = userRepository.getReferenceById(userId);
-                
         Product product = productRepository.findById(productId)
                 .orElseThrow(() -> new IllegalArgumentException("Producto no encontrado con ID: " + productId));    
 
@@ -40,12 +37,11 @@ public class FavoriteService {
         return favoriteRepository.save(favorite);
     }
 
-    //Lista de productos favoritos
+    
     public List<FavoriteDto> getFavorites(Long userId) {
         return favoriteRepository.findByUserId(userId)
                 .stream()
-                .map(Favorite::getProduct) // Obtenemos el objeto Product
-                // CORRECCIÓN 2: Mapear la entidad Product al DTO
+                .map(Favorite::getProduct) 
                 .map(product -> new FavoriteDto(
                     product.getName(),
                     product.getDescription(),
@@ -56,7 +52,6 @@ public class FavoriteService {
 
     @Transactional
     public void removeFavorite(Long userId, Long productId) {
-        // Solo elimina si ambos IDs coinciden (el producto debe pertenecer a ese usuario)
         favoriteRepository.deleteByUserIdAndProductId(userId, productId);
     }
 }

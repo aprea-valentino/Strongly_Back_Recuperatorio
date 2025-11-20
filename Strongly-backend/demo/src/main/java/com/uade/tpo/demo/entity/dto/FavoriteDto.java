@@ -44,13 +44,5 @@ public class FavoriteDto {
         return Objects.hash(name, description, price);
     }
 
-    // --- 6. Opcional: toString() para logging y debugging ---
-    @Override
-    public String toString() {
-        return "FavoriteProductDTO{" +
-                "name='" + name + '\'' +
-                ", description='" + description + '\'' +
-                ", price=" + price +
-                '}';
-    }
+
 }
