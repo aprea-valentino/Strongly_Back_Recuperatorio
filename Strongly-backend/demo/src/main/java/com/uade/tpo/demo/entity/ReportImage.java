@@ -12,14 +12,11 @@ public class ReportImage {
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "idProblem", insertable = false, updatable = false)
-    private Long idProblem;
-
     @Column(name = "url")
     private String url;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "idProblem", referencedColumnName = "idproblem_forms")
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "id_Problem")
     private Report report;
 
 }

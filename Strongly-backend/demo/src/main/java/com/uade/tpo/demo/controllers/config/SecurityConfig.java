@@ -39,7 +39,8 @@ public class SecurityConfig {
             .requestMatchers(HttpMethod.GET,"/offers/**").permitAll() // ofertas 
             .requestMatchers(HttpMethod.GET,"/brands/**").permitAll() // marcas 
             .requestMatchers(HttpMethod.GET,"/support/**").permitAll() // soporte 
-            // Endpoints solo para compradores                                
+            // Endpoints solo para compradores    
+            .requestMatchers("/api/reports").hasAuthority(Role.BUYER.name())                            
             .requestMatchers("/cart/**").hasAnyAuthority(Role.BUYER.name()) // carrito
             .requestMatchers("/orders/**").hasAuthority(Role.BUYER.name()) // órdenes
             .requestMatchers("/users/profile/**").hasAuthority(Role.BUYER.name()) // perfil

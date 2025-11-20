@@ -2,12 +2,14 @@ package com.uade.tpo.demo.entity.dto;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
-import org.springframework.web.multipart.MultipartFile;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
+import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class ReportRequest {
+public class ReportPathsRequest {
     @NotBlank(message = "Es requerido el nombre completo")
     @Size(max = 255)
     private String fullname;
@@ -19,6 +21,6 @@ public class ReportRequest {
     @NotBlank(message = "Es requerida la descripcion del report")
     private String description;
 
-    // Para multipart/form-data
-    private MultipartFile[] files;
+    // Lista de rutas absolutas en el servidor (p.ej. C:/uade/file.png)
+    private List<String> multipartFile;
 }

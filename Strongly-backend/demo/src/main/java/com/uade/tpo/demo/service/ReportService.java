@@ -1,10 +1,12 @@
 package com.uade.tpo.demo.service;
 
 import com.uade.tpo.demo.entity.Report;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.List;
 
 public interface ReportService {
-	Report createReport(String fullname, String problem, String description, MultipartFile[] files) throws IOException;
+
+	
+	Report createReportFromLocalPaths(String fullname, String problem, String description, List<String> localPaths) throws IOException;
 }
